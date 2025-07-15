@@ -6,38 +6,89 @@
     <title>User Management</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            text-align: center;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            background: linear-gradient(135deg, #e0e7ff 0%, #f8fafc 100%);
+            min-height: 100vh;
         }
         .container {
-            max-width: 600px;
-            margin: 0 auto;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            margin: 40px auto;
+            background: #fff;
+            border-radius: 18px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+            padding: 32px 28px 24px 28px;
+            transition: box-shadow 0.2s;
+        }
+        .container:hover {
+            box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.22);
         }
         h1 {
-            color: #333;
+            color: #2563eb;
+            font-size: 2.2rem;
+            margin-bottom: 18px;
+            letter-spacing: 1px;
         }
-        form {
-            margin: 20px 0;
-        }
-        input {
-            padding: 10px;
-            margin: 5px 0;
-            width: 80%;
-            font-size: 16px;
-        }
-        button {
-            padding: 10px 20px;
-            margin: 10px;
-            font-size: 16px;
-            cursor: pointer;
+        h2 {
+            color: #1e293b;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            margin-top: 24px;
         }
         .section {
-            margin-bottom: 30px;
+            margin-bottom: 28px;
+            background: #f1f5f9;
+            border-radius: 10px;
+            padding: 18px 12px 10px 12px;
+            box-shadow: 0 2px 8px 0 rgba(31, 38, 135, 0.04);
+        }
+        form {
+            margin: 0;
+        }
+        input {
+            padding: 10px 12px;
+            margin: 7px 0;
+            width: 90%;
+            font-size: 1rem;
+            border: 1.5px solid #cbd5e1;
+            border-radius: 7px;
+            transition: border 0.2s, box-shadow 0.2s;
+            outline: none;
+            background: #f8fafc;
+        }
+        input:focus {
+            border: 1.5px solid #2563eb;
+            box-shadow: 0 0 0 2px #93c5fd55;
+        }
+        button {
+            padding: 10px 24px;
+            margin: 12px 0 0 0;
+            font-size: 1rem;
+            font-weight: 500;
+            color: #fff;
+            background: linear-gradient(90deg, #2563eb 60%, #60a5fa 100%);
+            border: none;
+            border-radius: 7px;
+            cursor: pointer;
+            box-shadow: 0 2px 8px 0 rgba(31, 38, 135, 0.08);
+            transition: background 0.2s, box-shadow 0.2s;
+        }
+        button:hover {
+            background: linear-gradient(90deg, #1d4ed8 60%, #38bdf8 100%);
+            box-shadow: 0 4px 16px 0 rgba(31, 38, 135, 0.13);
+        }
+        #logged-in-screen h1 {
+            color: #059669;
+            font-size: 2rem;
+        }
+        @media (max-width: 500px) {
+            .container {
+                max-width: 98vw;
+                padding: 18px 4vw 12px 4vw;
+            }
+            input {
+                width: 98%;
+            }
         }
     </style>
 </head>
