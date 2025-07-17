@@ -11,8 +11,20 @@ class UserService:
         return user
         
     def register_user(self, new_user: User) -> User:
-        ## TODO
-        new_user = None
+        """
+            Register a new user.
+            Raises ValueError if the user already exists.
+            
+            Args:
+                new_user (User): The user to register.
+                
+            Returns:
+                User: The registered user.
+        """
+        if self.repo.get_user_by_email(new_user.email):
+            raise ValueError("User already Exists.")
+        
+        new_user = self.repo.save_user(new_user)
         return new_user
 
     def delete_user(self, email: str) -> User:
