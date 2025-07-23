@@ -67,13 +67,46 @@ class IMDBCrawler(BaseCrawler):
                 except NoSuchElementException:
                     pass
 
-                # 데이터 추출
-                author = elem.find_element(By.CSS_SELECTOR, "div[data-testid='reviews-author'] a[data-testid='author-link']").text.strip()
-                date = elem.find_element(By.CSS_SELECTOR, "div[data-testid='reviews-author'] li.review-date").text.strip()
-                score = elem.find_element(By.CSS_SELECTOR, "span.review-rating span.ipc-rating-star--rating").text.strip()
-                title = elem.find_element(By.CSS_SELECTOR, "div[data-testid='review-summary'] h3").text.strip()
-                content = elem.find_element(By.CSS_SELECTOR, "div.ipc-html-content-inner-div").text.strip()
-                full_content = f"{title}\n{content}" if title else content
+                # 작성자
+                try:
+                    author = elem.find_element(
+                        By.CSS_SELECTOR, "div[data-testid='reviews-author'] a[data-testid='author-link']"
+                    ).text.strip()
+                except NoSuchElementException:
+                    author = "작성자 정보 없음"
+
+                # 날짜
+                try:
+                    date = elem.find_element(
+                        By.CSS_SELECTOR, "div[data-testid='reviews-author'] li.review-date"
+                    ).text.strip()
+                except NoSuchElementException:
+                    date = "날짜 정보 없음"
+
+                # 별점
+                try:
+                    score = elem.find_element(
+                        By.CSS_SELECTOR, "span.review-rating span.ipc-rating-star--rating"
+                    ).text.strip()
+                except NoSuchElementException:
+                    score = "별점 없음"
+
+                # 제목 + 내용
+                try:
+                    title = elem.find_element(
+                        By.CSS_SELECTOR, "div[data-testid='review-summary'] h3"
+                    ).text.strip()
+                except NoSuchElementException:
+                    title = ""
+
+                try:
+                    content = elem.find_element(
+                        By.CSS_SELECTOR, "div.ipc-html-content-inner-div"
+                    ).text.strip()
+                except NoSuchElementException:
+                    content = ""
+
+                full_content = f"{title}\n{content}".strip()
 
                 self.reviews.append({
                     "author": author,
