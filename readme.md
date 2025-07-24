@@ -93,25 +93,32 @@ FE 스크립트 실행
     월별 리뷰 수는 최근 들어 눈에 띄는 향상폭을 보인다.
 
 ## IMDB
+
 * Review Text Length Distribution
 
-    <img src="review_analysis/plots/imdb_review_text_length_distribution.png">
+    <img src="review_analysis/plots/imdb_text_length_distribution_eng.png">
 
-    리뷰 길이는 100~1000자 사이가 가장 많으며, 일부 리뷰는 3000자 가까이로 매우 길다.  
-    과도하게 긴 텍스트는 이상치로 간주되어 제거하였다.
+    리뷰 길이는 100~1000자 사이가 가장 많으며, 일부는 3000자 가까이 되는 긴 리뷰도 존재했다.  
+    너무 긴 리뷰는 이상치로 간주해 제거하였다.
 
 * Distribution of Ratings (0~10)
 
-    <img src="review_analysis/plots/imdb_distribution_of_rating.png">
+    <img src="review_analysis/plots/imdb_rating_distribution_eng.png">
 
-    10점 만점 기준으로 8.0~10.0 사이의 고득점 리뷰가 많은 편이며, 저평가 리뷰도 상대적으로 다양하게 분포해 있다.
+    10점 만점 기준으로 8~10점 사이의 고득점 리뷰가 가장 많았으며,  
+    1~7점 사이도 비교적 고르게 분포되어 있다.
 
-* Monthly Review Count
+* Days Since Release — Histogram
 
-    <img src="review_analysis/plots/imdb_monthly_review_count.png">
+    <img src="review_analysis/plots/imdb_days_after_release_hist.png">
 
-    월별 리뷰 수는 개봉 직후에 급증한 뒤 점차 줄어드는 경향을 보인다.  
-    리뷰 작성 시점과 영화 개봉일 간의 시간 차이를 고려한 분석이 유의미하다.
+    개봉 직후 며칠간 리뷰 수가 급증하고 이후 점점 줄어드는 형태를 보인다.
+
+* Days Since Release — Boxplot
+
+    <img src="review_analysis/plots/imdb_days_after_release_boxplot.png">
+
+    박스플롯에서도 대다수 리뷰가 개봉 후 0~100일 사이에 집중된 것을 확인할 수 있다.
 
 
 <br>
