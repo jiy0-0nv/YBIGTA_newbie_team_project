@@ -65,7 +65,7 @@ python -m review_analysis.crawling.main -o database --all
 FE 스크립트 실행
 
 ```bash
-# 추가해주세요
+python -m review_analysis.preprocessing.main -a
 ```
 
 <br>
@@ -73,7 +73,21 @@ FE 스크립트 실행
 # 📊 EDA
 
 ## Metacritic
-(추가해주세요)
+* Review Text Length Distribution
+
+    <img src="review_analysis\plots\metacritic_review_text_length_distribution.png">
+
+    대부분은 200자 부근에 몰려있음.
+
+* Distribution of Ratings (0~5)
+
+    <img src="review_analysis\plots\metacritic_distribution_of_rating.png">
+    대부분 높은 점수에 몰려있고, 중간이나 낮은 점수보다 오히려 1점같은 극단값에 더많이 분포하는 형태를 보였다.
+
+* Review accumulation
+
+    <img src="review_analysis\plots\metacritic_days_after_release_hist.png">
+    누적 리뷰 수는 초기에 대부분의 리뷰가 작성되고 시간이 지날수록 로그함수처럼 줄어든다.
 
 ## Rotten Tomatoes
 * Review Text Length Distribution
@@ -126,7 +140,16 @@ FE 스크립트 실행
 # 🔧 Postprocessing / Feature Engineering
 
 ## Metacritic
-(추가해주세요)
+* **결측치**:
+    - `score`, `date`, `content` 결측 시 행 제거
+* **이상치**:
+    - 별점 범위 아닌 경우 제거
+* **텍스트 데이터 전처리**:
+    - 텍스트에서 이모지 제거
+* **파생 변수**:
+    - `hatescore`: 3점이하의 점수를 준 사람들이 쓴 리뷰길이의 루트값
+* **텍스트 벡터화**:
+    - TF‑IDF 
 
 ## Rotten Tomatoes
 * **결측치**:
@@ -160,7 +183,7 @@ FE 스크립트 실행
 # 🔎 비교 분석
 
 ## 텍스트 비교 분석
-(추가해주세요)
+<img src="review_analysis/plots/compare_analysis_text.png">
 
 ## 시계열 비교 분석
-(추가해주세요)
+<img src="review_analysis/plots/compare_analysis_serial.png">

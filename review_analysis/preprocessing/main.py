@@ -4,6 +4,7 @@ from argparse import ArgumentParser
 from typing import Dict, Type
 from review_analysis.preprocessing.base_processor import BaseDataProcessor
 from review_analysis.preprocessing.example_processor import ExampleProcessor
+from review_analysis.preprocessing.metacritic_processor import MetacriticProcessor
 from review_analysis.preprocessing.rottentomatoes_processor import RottentomatoesProcessor
 from review_analysis.preprocessing.imdb_processor import IMDBProcessor
 
@@ -12,12 +13,15 @@ from review_analysis.preprocessing.imdb_processor import IMDBProcessor
 # key는 "reviews_사이트이름"으로, value는 해당 처리를 위한 클래스
 PREPROCESS_CLASSES: Dict[str, Type[BaseDataProcessor]] = {
     "reviews_example": ExampleProcessor,
+    "reviews_metacritic" : MetacriticProcessor,
     "reviews_rottentomatoes": RottentomatoesProcessor,
     "reviews_imdb": IMDBProcessor
     # key는 크롤링한 csv파일 이름으로 적어주세요! ex. reviews_naver.csv -> reviews_naver
 }
 
-REVIEW_COLLECTIONS = glob.glob(os.path.join("..","..","database", "reviews_*.csv"))
+# 파일위치 기준 탐색
+script_dir = os.path.dirname(os.path.abspath(__file__))
+REVIEW_COLLECTIONS = glob.glob(os.path.join(script_dir,"..","..","database", "reviews_*.csv"))
 
 def create_parser() -> ArgumentParser:
     parser = ArgumentParser()
@@ -32,9 +36,10 @@ if __name__ == "__main__":
 
     parser = create_parser()
     args = parser.parse_args()
+    # 파일위치기준 경로설정
+    args.output_dir = os.path.join(script_dir,args.output_dir)
 
     os.makedirs(args.output_dir, exist_ok=True)
-
     if args.all: 
         for csv_file in REVIEW_COLLECTIONS:
             base_name = os.path.splitext(os.path.basename(csv_file))[0]
