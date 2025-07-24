@@ -1,4 +1,5 @@
-from review_analysis.crawling.base_crawler import BaseCrawler
+import os
+from .base_crawler import BaseCrawler
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 import time
@@ -103,7 +104,8 @@ class MetacriticCrawler(BaseCrawler):
             
     def save_to_database(self):
         # DataFrame 생성 및 CSV 저장
+        csv_path = os.path.join(self.output_dir, 'reviews_metacritic.csv')
         df = pd.DataFrame(self.reviews_data)
-        df.to_csv('metacritic_reviews.csv', index=False, encoding='utf-8-sig')
+        df.to_csv(csv_path, index=False, encoding='utf-8-sig')
         print("CSV 파일 저장 완료!")
 

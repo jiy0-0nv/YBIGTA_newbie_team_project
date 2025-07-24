@@ -10,7 +10,7 @@ from selenium.common.exceptions import NoSuchElementException
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
 
-from review_analysis.crawling.base_crawler import BaseCrawler
+from .base_crawler import BaseCrawler
 from utils.logger import setup_logger
 
 

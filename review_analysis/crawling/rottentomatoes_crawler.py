@@ -6,7 +6,7 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
 from bs4 import BeautifulSoup
-from base_crawler import BaseCrawler
+from .base_crawler import BaseCrawler
 import sys
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(os.path.abspath(os.path.dirname(os.path.abspath(__file__)))))))
 from utils.logger import setup_logger
@@ -25,10 +25,7 @@ class RottentomatoesCrawler(BaseCrawler):
         self.logger.info('브라우저 시작')
         chrome_opts = Options()
         # chrome_opts.add_argument('--headless')
-        self.driver = webdriver.Chrome(
-            ChromeDriverManager().install(),
-            options=chrome_opts
-        )
+        self.driver = webdriver.Chrome(options=chrome_opts)
 
     def scrape_reviews(self):
         self.logger.info('로튼토마토 리뷰 크롤링 시작')
