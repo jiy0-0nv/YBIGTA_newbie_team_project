@@ -7,6 +7,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 from selenium.common.exceptions import NoSuchElementException
+from typing import List, Dict, Any
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
 
@@ -15,8 +16,11 @@ from utils.logger import setup_logger
 
 
 class IMDBCrawler(BaseCrawler):
+    reviews: List[Dict[str, Any]]
+    
     def __init__(self, output_dir: str):
         super().__init__(output_dir)
+        self.reviews: List[Dict[str, Any]] = []
         self.base_url = "https://www.imdb.com/title/tt1745960/reviews?ref_=tt_ql_3"
         self.driver = None
         self.reviews = []

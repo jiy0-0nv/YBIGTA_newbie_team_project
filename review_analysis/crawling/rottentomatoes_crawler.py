@@ -10,10 +10,13 @@ from .base_crawler import BaseCrawler
 import sys
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(os.path.abspath(os.path.dirname(os.path.abspath(__file__)))))))
 from utils.logger import setup_logger
+from typing import List, Dict, Any
 
 class RottentomatoesCrawler(BaseCrawler):
+    reviews: List[Dict[str, Any]]
     def __init__(self, output_dir: str):
         super().__init__(output_dir)
+        self.reviews = []  # type: List[Dict[str, Any]]
         self.base_url = 'https://www.rottentomatoes.com/m/top_gun_maverick/reviews?type=user'
         self.driver = None
         self.reviews = []
