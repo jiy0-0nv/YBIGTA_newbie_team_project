@@ -10,6 +10,7 @@ class RottentomatoesProcessor(BaseDataProcessor):
         super().__init__(input_path, output_path)
         self.df = None
         self.tfidf_vectorizer = None
+        self.output_path = output_path
 
     def preprocess(self):
         # 1) 데이터 로드 및 결측치 처리
