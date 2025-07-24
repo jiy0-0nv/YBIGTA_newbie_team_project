@@ -93,7 +93,33 @@ FE 스크립트 실행
     월별 리뷰 수는 최근 들어 눈에 띄는 향상폭을 보인다.
 
 ## IMDB
-(추가해주세요)
+
+* Review Text Length Distribution
+
+    <img src="review_analysis/plots/imdb_text_length_distribution_eng.png">
+
+    리뷰 길이는 100~1000자 사이가 가장 많으며, 일부는 3000자 가까이 되는 긴 리뷰도 존재했다.  
+    너무 긴 리뷰는 이상치로 간주해 제거하였다.
+
+* Distribution of Ratings (0~10)
+
+    <img src="review_analysis/plots/imdb_rating_distribution_eng.png">
+
+    10점 만점 기준으로 8~10점 사이의 고득점 리뷰가 가장 많았으며,  
+    1~7점 사이도 비교적 고르게 분포되어 있다.
+
+* Days Since Release — Histogram
+
+    <img src="review_analysis/plots/imdb_days_after_release_hist.png">
+
+    개봉 직후 며칠간 리뷰 수가 급증하고 이후 점점 줄어드는 형태를 보인다.
+
+* Days Since Release — Boxplot
+
+    <img src="review_analysis/plots/imdb_days_after_release_boxplot.png">
+
+    박스플롯에서도 대다수 리뷰가 개봉 후 0~100일 사이에 집중된 것을 확인할 수 있다.
+
 
 <br>
 
@@ -117,7 +143,17 @@ FE 스크립트 실행
     - TF‑IDF 요약 지표 추가 (`tfidf_mean`, `tfidf_max`, `tfidf_nnz`)
 
 ## IMDB
-(추가해주세요)
+* **결측치**:
+    - `score`, `date`, `content` 결측 시 행 제거
+* **이상치**:
+    - `text_length > 3000`인 경우 제거
+* **텍스트 데이터 전처리**:
+    - `text_length`: 리뷰 텍스트 길이 계산 후 3000자 이하만 유지 (이상치 제거)
+* **파생 변수**:
+    - `text_length`: 리뷰 텍스트 길이
+    - `days_since_release`: 영화 개봉일(2022-05-27) 기준 작성일 차이
+* **텍스트 벡터화**:
+    - TF‑IDF 요약 지표 추가 (`tfidf_mean`, `tfidf_max`, `tfidf_nnz`)
 
 <br>
 
