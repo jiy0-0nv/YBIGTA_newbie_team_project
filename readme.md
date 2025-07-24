@@ -76,7 +76,21 @@ FE 스크립트 실행
 (추가해주세요)
 
 ## Rotten Tomatoes
-(추가해주세요)
+* Review Text Length Distribution
+
+    <img src="review_analysis\plots\rottentomatoes_review_text_length_distribution.png">
+
+    대부분은 0~500자 사이의 짧은 리뷰이나 드물게 5000자 이상의 매우 긴 리뷰가 존재했다.
+
+* Distribution of Ratings (0~5)
+
+    <img src="review_analysis\plots\rottentomatoes_distribution_of_rating.png">
+    5.0이 매우 큰 비율을 보였다. 4.0 이상이 대부분이며 0.5~3.5 데이터는 비교적 고르게 분포해 있다.
+
+* Monthly Review Count
+
+    <img src="review_analysis\plots\rottentomatoes_monthly_review_count.png">
+    월별 리뷰 수는 최근 들어 눈에 띄는 향상폭을 보인다.
 
 ## IMDB
 (추가해주세요)
@@ -89,7 +103,18 @@ FE 스크립트 실행
 (추가해주세요)
 
 ## Rotten Tomatoes
-(추가해주세요)
+* **결측치**:
+    - `score`, `date`, `content` 결측 시 행 제거
+    - `author` 결측 시 `unknown` 대체
+* **이상치**:
+    - 별점 범위 아닌 경우 제거
+* **텍스트 데이터 전처리**:
+    - 비정상적으로 길거나 짧은 리뷰 제거 (`text_length < 10` 또는 `> 1000`)
+* **파생 변수**:
+    - `text_length`: 리뷰 텍스트 길이
+    - `days_since_release`: 영화 개봉일 대비 작성일 차이
+* **텍스트 벡터화**:
+    - TF‑IDF 요약 지표 추가 (`tfidf_mean`, `tfidf_max`, `tfidf_nnz`)
 
 ## IMDB
 (추가해주세요)
