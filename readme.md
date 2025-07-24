@@ -93,7 +93,26 @@ FE 스크립트 실행
     월별 리뷰 수는 최근 들어 눈에 띄는 향상폭을 보인다.
 
 ## IMDB
-(추가해주세요)
+* Review Text Length Distribution
+
+    <img src="review_analysis/plots/imdb_review_text_length_distribution.png">
+
+    리뷰 길이는 100~1000자 사이가 가장 많으며, 일부 리뷰는 3000자 가까이로 매우 길다.  
+    과도하게 긴 텍스트는 이상치로 간주되어 제거하였다.
+
+* Distribution of Ratings (0~10)
+
+    <img src="review_analysis/plots/imdb_distribution_of_rating.png">
+
+    10점 만점 기준으로 8.0~10.0 사이의 고득점 리뷰가 많은 편이며, 저평가 리뷰도 상대적으로 다양하게 분포해 있다.
+
+* Monthly Review Count
+
+    <img src="review_analysis/plots/imdb_monthly_review_count.png">
+
+    월별 리뷰 수는 개봉 직후에 급증한 뒤 점차 줄어드는 경향을 보인다.  
+    리뷰 작성 시점과 영화 개봉일 간의 시간 차이를 고려한 분석이 유의미하다.
+
 
 <br>
 
@@ -117,7 +136,17 @@ FE 스크립트 실행
     - TF‑IDF 요약 지표 추가 (`tfidf_mean`, `tfidf_max`, `tfidf_nnz`)
 
 ## IMDB
-(추가해주세요)
+* **결측치**:
+    - `score`, `date`, `content` 결측 시 행 제거
+* **이상치**:
+    - `text_length > 3000`인 경우 제거
+* **텍스트 데이터 전처리**:
+    - `text_length`: 리뷰 텍스트 길이 계산 후 3000자 이하만 유지 (이상치 제거)
+* **파생 변수**:
+    - `text_length`: 리뷰 텍스트 길이
+    - `days_since_release`: 영화 개봉일(2022-05-27) 기준 작성일 차이
+* **텍스트 벡터화**:
+    - TF‑IDF 요약 지표 추가 (`tfidf_mean`, `tfidf_max`, `tfidf_nnz`)
 
 <br>
 
