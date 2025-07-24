@@ -23,9 +23,13 @@ class MetacriticProcessor(BaseDataProcessor):
         # 2. 이상치 처리 (예: 점수가 0-10 범위를 벗어나는 경우)
         self.df = self.df[(self.df['score'] >= 0) & (self.df['score'] <= 10)]
         
-        # 3. 텍스트 데이터에서 이모지 제거
+        # 3. 컬럼명 변경 (review -> content)
         if 'review' in self.df.columns:
-            self.df['review'] = self.df['review'].apply(self._remove_emoji)
+            self.df = self.df.rename(columns={'review': 'content'})
+        
+        # 4. 텍스트 데이터에서 이모지 제거
+        if 'content' in self.df.columns:
+            self.df['content'] = self.df['content'].apply(self._remove_emoji)
 
     def _remove_emoji(self, text):
         '''
@@ -46,7 +50,7 @@ class MetacriticProcessor(BaseDataProcessor):
         
         # 3점 이하 리뷰에 대해서만 hatescore 계산
         self.df.loc[low_score_mask, 'hatescore'] = np.sqrt(
-            self.df.loc[low_score_mask, 'review'].str.len()
+            self.df.loc[low_score_mask, 'content'].str.len()
         )
         
         # 2. 리뷰 텍스트 벡터화 (TF-IDF)
@@ -57,7 +61,7 @@ class MetacriticProcessor(BaseDataProcessor):
         )
         
         # 리뷰 텍스트 벡터화
-        review_vectors = vectorizer.fit_transform(self.df['review'])
+        review_vectors = vectorizer.fit_transform(self.df['content'])
         
         # 벡터화된 결과를 데이터프레임으로 변환
         vector_df = pd.DataFrame(
