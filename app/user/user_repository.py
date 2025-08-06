@@ -1,13 +1,11 @@
 from typing import Optional
-import datetime
 
-from sqlalchemy import Column, String, Integer, DateTime, MetaData, Table
+from sqlalchemy import Column, String, MetaData
 from sqlalchemy.orm import Session, declarative_base
 
 from database.mysql_connection import SessionLocal, engine
 
 from app.user.user_schema import User
-from app.config import USER_DATA
 
 Base = declarative_base()
 metadata = MetaData()
@@ -21,7 +19,7 @@ class UserModel(Base):
 class UserRepository:
     def __init__(self, db: Session) -> None:
         self.db = db
-        Base.metadata.create_all(bind=self.db.get_bind())
+        # Base.metadata.create_all(bind=self.db.get_bind())
 
     def get_user_by_email(self, email: str) -> Optional[User]:
         obj = self.db.query(UserModel).filter(UserModel.email == email).first()
@@ -64,4 +62,4 @@ class UserRepository:
         # 삭제 후 원본 Pydantic 모델 반환
         return user
     
-Base.metadata.create_all(bind=engine)
+# Base.metadata.create_all(bind=engine)
