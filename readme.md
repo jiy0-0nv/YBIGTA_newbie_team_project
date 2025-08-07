@@ -1,189 +1,67 @@
-# 🚀 YBIGTA 2조
+# README.md
 
-안녕하세요! YBIGTA 27기 교육세션 2조입니다.<br>
-영화 <탑건: 매버릭(2022)>의 리뷰 데이터를 기반으로 한 웹 크롤링부터 전처리, 분석, 시각화와 간단한 웹사이트 구현을 진행하고 있습니다.
+### Docker Hub 주소
 
-## 팀원 소개
+[https://hub.docker.com/repository/docker/jinoogi/session8/general](https://hub.docker.com/repository/docker/jinoogi/session8/general)
 
-* <b>어예지</b> (응용통계학과 21) : BE, IMDB 리뷰 데이터 수집
-* <b>정지윤</b> (컴퓨터과학과 22) : 팀장, BE, 로튼토마토 리뷰 데이터 수집
-* <b>정진욱</b> (사회환경시스템공학 18) : FE, 메타크리틱 리뷰 데이터 수집, 비교분석
+---
 
-## 메인 브랜치 보호 정책
+### RDS 퍼블릭 액세스 비활성화 및 VPC를 이용한 보안 설정
+<img src="images/image 1.png">
+<img src="images/image 2.png">
+Amazon RDS (Relational Database Service)를 사용할 때, 데이터베이스의 보안을 강화하기 위해 퍼블릭 액세스를 허용하지 않는 것이 중요합니다. 대신, VPC(Virtual Private Cloud) 내에서 EC2 인스턴스와 같은 허가된 리소스만 데이터베이스에 접근할 수 있도록 보안 그룹을 설정하는 것이 안전한 방법입니다.
 
-* `main` 브랜치는 직접 push 금지
-* Pull Request(PR) 후 Review 1명 이상 승인 시 병합 가능
+다음은 이 프로젝트에서 적용한 보안 설정 과정입니다:
 
-    <img src="github\branch_protection.png">
-    <img src="github\push_rejected.png">
-    <img src="github\review_and_merged.png" width="500">
+1.  **RDS 인스턴스 보안 그룹 설정**:
+    * RDS 데이터베이스의 보안 그룹을 생성하고, 외부에서의 직접적인 접근을 막기 위해 모든 인바운드 규칙을 기본적으로 차단합니다.
+2.  **인바운드 규칙 추가**:
+    * EC2 인스턴스가 RDS 데이터베이스에 접근할 수 있도록 인바운드 규칙을 추가합니다.
+    * 규칙 유형으로 `MYSQL/Aurora` (TCP 포트 3306)를 선택합니다.
+    * 소스(Source)에는 특정 IP 주소 대신, 애플리케이션이 실행되고 있는 **EC2 인스턴스의 보안 그룹 ID**를 지정합니다.
+    * 이 설정을 통해 지정된 보안 그룹에 속한 EC2 인스턴스만이 VPC 내부 네트워크를 통해 RDS 데이터베이스에 접근할 수 있게 됩니다.
 
 <br>
 
-# ⚡ 코드 실행 방법
+*설정 화면 예시*
+*EC2 보안 그룹 인바운드 규칙 편집 화면. MYSQL/Aurora(3306) 포트에 대해 특정 보안 그룹(sg-...)의 접근을 허용하고 있습니다.*
+![EC2 보안 그룹 인바운드 규칙 편집 화면](https://storage.googleapis.com/generativeai-downloads/images/image%201.png)
 
-1. 저장소 클론
+---
 
-```
-git clone https://github.com/jiy0-0nv/YBIGTA_newbie_team_project.git
-cd YBIGTA_newbie_team_project
-```
+### 프로젝트를 통해 배운 점 및 오류 해결 경험
+<img src="images/image 3.png">
 
-2. (optional) 가상환경 활성화
+**1. Docker를 통한 배포 자동화의 편리성**
 
-```
-python -m venv venv
+과거에는 FileZilla와 같은 FTP 클라이언트를 사용하여 개발한 서비스 파일들을 직접 EC2 인스턴스 서버에 수동으로 업로드하는 방식을 사용했습니다. 이 방법은 과정이 번거롭고 배포 실수가 발생할 가능성이 높았습니다.
 
-venv\Scripts\activate # Windows
-source venv/Scripts/activate # Macs
-```
+하지만 이번 프로젝트에서는 Docker를 도입하여 배포 과정을 자동화했습니다. Docker 이미지를 빌드하여 Docker Hub에 올리고, EC2 인스턴스에서는 간단한 `docker run` 명령어만으로 애플리케이션을 실행할 수 있었습니다. 이를 통해 배포 과정이 매우 간편해졌고, 일관된 환경에서 서비스를 실행할 수 있어 안정성이 크게 향상되었습니다.
 
-3. 의존성 설치
+**2. CPU 아키텍처 불일치로 인한 실행 오류 해결**
 
-```
-pip install -r requirements.txt
-```
+프로젝트를 진행하며 중요한 기술적 문제를 마주하고 해결하는 경험을 했습니다. 로컬 개발 환경인 M1 MacBook (ARM64 아키텍처)에서 Docker 이미지를 빌드한 후, 해당 이미지를 AWS EC2의 기본 인스턴스(x86, AMD64 아키텍처)에서 실행하려고 시도했습니다.
 
-## Web 코드 실행 방법
-
-개발 서버 실행
+컨테이너 실행 시 다음과 같은 경고 메시지가 나타났고, 컨테이너는 정상적으로 작동하지 않았습니다.
 
 ```bash
-uvicorn app.main:app --reload
+ubuntu@ip-172-31-41-126:~$ docker run -d -p 8000:8000 --env-file ./.env --name my-app-container jinoogi/session8
+
+WARNING: The requested image's platform (linux/arm64) does not match the detected host platform (linux/amd64/v3) and no specific platform was requested
+58e8a28e0d294cfa7c8b482565fba42d0792dc79b603e2c891b8a8e63e1295cf
+
+ubuntu@ip-172-31-41-126:~$ docker logs 58e8a28e0d29
+exec /usr/local/bin/uvicorn: exec format error
+
+
 ```
 
-## 크롤링 코드 실행 방법
+로그에서 보이는 exec format error는 빌드된 이미지의 CPU 아키텍처(ARM64)와 컨테이너를 실행하려는 호스트 서버의 아키텍처(AMD64)가 호환되지 않아 발생한 문제였습니다.
 
-크롤링 스크립트 실행
+이 문제를 해결하기 위해 두 가지 방법이 있음을 알게 되었습니다.
 
-```bash
-python -m review_analysis.crawling.main -o database --all 
-```
+--platform linux/amd64 옵션을 사용하여 빌드 시 타겟 아키텍처를 명시하는 방법.
 
-## FE 코드 실행 방법
+실행 환경인 EC2 인스턴스를 ARM 아키텍처 기반(AWS Graviton) 인스턴스로 변경하는 방법.
 
-FE 스크립트 실행
-
-```bash
-python -m review_analysis.preprocessing.main -a
-```
-
-<br>
-
-# 📊 EDA
-
-## Metacritic
-* Review Text Length Distribution
-
-    <img src="review_analysis\plots\metacritic_review_text_length_distribution.png">
-
-    대부분은 200자 부근에 몰려있음.
-
-* Distribution of Ratings (0~5)
-
-    <img src="review_analysis\plots\metacritic_distribution_of_rating.png">
-    대부분 높은 점수에 몰려있고, 중간이나 낮은 점수보다 오히려 1점같은 극단값에 더많이 분포하는 형태를 보였다.
-
-* Review accumulation
-
-    <img src="review_analysis\plots\metacritic_days_after_release_hist.png">
-    누적 리뷰 수는 초기에 대부분의 리뷰가 작성되고 시간이 지날수록 로그함수처럼 줄어든다.
-
-## Rotten Tomatoes
-* Review Text Length Distribution
-
-    <img src="review_analysis\plots\rottentomatoes_review_text_length_distribution.png">
-
-    대부분은 0~500자 사이의 짧은 리뷰이나 드물게 5000자 이상의 매우 긴 리뷰가 존재했다.
-
-* Distribution of Ratings (0~5)
-
-    <img src="review_analysis\plots\rottentomatoes_distribution_of_rating.png">
-    5.0이 매우 큰 비율을 보였다. 4.0 이상이 대부분이며 0.5~3.5 데이터는 비교적 고르게 분포해 있다.
-
-* Monthly Review Count
-
-    <img src="review_analysis\plots\rottentomatoes_monthly_review_count.png">
-    월별 리뷰 수는 최근 들어 눈에 띄는 향상폭을 보인다.
-
-## IMDB
-
-* Review Text Length Distribution
-
-    <img src="review_analysis/plots/imdb_text_length_distribution_eng.png">
-
-    리뷰 길이는 100~1000자 사이가 가장 많으며, 일부는 3000자 가까이 되는 긴 리뷰도 존재했다.  
-    너무 긴 리뷰는 이상치로 간주해 제거하였다.
-
-* Distribution of Ratings (0~10)
-
-    <img src="review_analysis/plots/imdb_rating_distribution_eng.png">
-
-    10점 만점 기준으로 8~10점 사이의 고득점 리뷰가 가장 많았으며,  
-    1~7점 사이도 비교적 고르게 분포되어 있다.
-
-* Days Since Release — Histogram
-
-    <img src="review_analysis/plots/imdb_days_after_release_hist.png">
-
-    개봉 직후 며칠간 리뷰 수가 급증하고 이후 점점 줄어드는 형태를 보인다.
-
-* Days Since Release — Boxplot
-
-    <img src="review_analysis/plots/imdb_days_after_release_boxplot.png">
-
-    박스플롯에서도 대다수 리뷰가 개봉 후 0~100일 사이에 집중된 것을 확인할 수 있다.
-
-
-<br>
-
-# 🔧 Postprocessing / Feature Engineering
-
-## Metacritic
-* **결측치**:
-    - `score`, `date`, `content` 결측 시 행 제거
-* **이상치**:
-    - 별점 범위 아닌 경우 제거
-* **텍스트 데이터 전처리**:
-    - 텍스트에서 이모지 제거
-* **파생 변수**:
-    - `hatescore`: 3점이하의 점수를 준 사람들이 쓴 리뷰길이의 루트값
-* **텍스트 벡터화**:
-    - TF‑IDF 
-
-## Rotten Tomatoes
-* **결측치**:
-    - `score`, `date`, `content` 결측 시 행 제거
-    - `author` 결측 시 `unknown` 대체
-* **이상치**:
-    - 별점 범위 아닌 경우 제거
-* **텍스트 데이터 전처리**:
-    - 비정상적으로 길거나 짧은 리뷰 제거 (`text_length < 10` 또는 `> 1000`)
-* **파생 변수**:
-    - `text_length`: 리뷰 텍스트 길이
-    - `days_since_release`: 영화 개봉일 대비 작성일 차이
-* **텍스트 벡터화**:
-    - TF‑IDF 요약 지표 추가 (`tfidf_mean`, `tfidf_max`, `tfidf_nnz`)
-
-## IMDB
-* **결측치**:
-    - `score`, `date`, `content` 결측 시 행 제거
-* **이상치**:
-    - `text_length > 3000`인 경우 제거
-* **텍스트 데이터 전처리**:
-    - `text_length`: 리뷰 텍스트 길이 계산 후 3000자 이하만 유지 (이상치 제거)
-* **파생 변수**:
-    - `text_length`: 리뷰 텍스트 길이
-    - `days_since_release`: 영화 개봉일(2022-05-27) 기준 작성일 차이
-* **텍스트 벡터화**:
-    - TF‑IDF 요약 지표 추가 (`tfidf_mean`, `tfidf_max`, `tfidf_nnz`)
-
-<br>
-
-# 🔎 비교 분석
-
-## 텍스트 비교 분석
-<img src="review_analysis/plots/compare_analysis_text.png">
-
-## 시계열 비교 분석
-<img src="review_analysis/plots/compare_analysis_serial.png">
+저는 후자의 방법을 선택하여 ARM 아키텍처 기반의 새 EC2 인스턴스를 생성하여 문제를 해결했습니다. 이 경험을 통해 Docker 이미지를 빌드하고 배포할 때, 개발 환경과 실행 환경의 CPU 아키텍처 호환성을 반드시 고려해야 한다는 점의 중요성을 깨달을 수 있었습니다.
