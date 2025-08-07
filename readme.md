@@ -2,7 +2,7 @@
 
 ### Docker Hub 주소
 
-[https://hub.docker.com/repository/docker/jinoogi/session8/general](https://hub.docker.com/repository/docker/jinoogi/session8/general)
+[https://hub.docker.com/r/jinoogi/session8](https://hub.docker.com/r/jinoogi/session8)
 
 ---
 
