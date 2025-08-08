@@ -41,4 +41,10 @@ jobs:
           chmod 600 private_key.pem
 
       - name: Deploy to EC2
-        run: ssh -o StrictHostKeyChecking=no -i private_key.pem ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} "docker system prune -af; docker pull ${{ secrets.DOCKER_IMAGE }}; docker rm -f fastapi || true; docker run -d --name fastapi -p 8000:8000 -e MYSQL_USER=${{ secrets.MYSQL_USER }} -e MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }} -e MYSQL_HOST=${{ secrets.MYSQL_HOST }} -e MYSQL_PORT=${{ secrets.MYSQL_PORT }} -e MYSQL_DB=${{ secrets.MYSQL_DB }} -e MONGO_URL=${{ secrets.MONGO_URL }} -e MONGO_DB_NAME=${{ secrets.MONGO_DB_NAME }} ${{ secrets.DOCKER_IMAGE }}"
+        run: |
+          ssh -o StrictHostKeyChecking=no -i private_key.pem ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} <<EOF
+          docker system prune -af
+          docker pull ${{ secrets.DOCKER_IMAGE }}
+          docker rm -f fastapi || true
+          docker run -d --name fastapi -p 8000:8000 ${{ secrets.DOCKER_IMAGE }}
+          EOF
