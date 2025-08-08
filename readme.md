@@ -1,5 +1,7 @@
 # README.md
 
+- EC2 Deploy 관련 문제가 지속되어 추후 다시 구성할 예정입니다.
+  
 ### Docker Hub 주소
 
 [https://hub.docker.com/r/jinoogi/session8](https://hub.docker.com/r/jinoogi/session8)
