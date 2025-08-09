@@ -1,0 +1,13 @@
+{
+  "top_gun_maverick": {
+    "title_ko": "탑건: 매버릭",
+    "title_en": "Top Gun: Maverick",
+    "director": "Joseph Kosinski",
+    "release_date": "2022-05-27",
+    "runtime_min": 130,
+    "cast_main": ["Tom Cruise", "Miles Teller", "Jennifer Connelly"],
+    "genre": ["Action", "Drama", "Millitary"],
+    "screenplay": ["Ehren Kruger", "Eric Warren Singer", "Christopher McQuarrie"],
+    "music": ["Harold Faltermeyer", "Lady Gaga", "Hans Zimmer"]
+  }
+}

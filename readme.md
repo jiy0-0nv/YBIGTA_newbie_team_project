@@ -1,4 +1,31 @@
-# README.md
+# 🚀 YBIGTA 2조
+
+안녕하세요! YBIGTA 27기 교육세션 2조입니다.<br>
+
+* <b>어예지</b> (응용통계학과 21)
+* <b>정지윤</b> (컴퓨터과학과 22)
+* <b>정진욱</b> (사회환경시스템공학 18)
+
+## State class 구현 방식
+
+### 목적
+
+- 노드 간 공통 I/O 계약을 표준화하는 단일 상태 컨테이너
+
+- JSON 직렬화 가능, 라우터 없이도 독립 테스트 가능
+
+- 변경 시 하위 호환 유지
+
+### 노드별 사용
+
+- Chat: `query`, `history`를 읽고 `answer`만 기록
+
+- Subject Info: `query`를 읽고 로컬 `subjects.json`만 근거로 `answer` 기록
+
+- RAG Review: `query`, `user_prefs`를 읽고 `retrieved`, `citations`, `answer` 기록
+
+
+---
 
 - EC2 Deploy 관련 문제가 지속되어 추후 다시 구성할 예정입니다.
   

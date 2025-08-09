@@ -211,3 +211,9 @@ mypy.ini
 
 # EDA
 eda.ipynb
+
+# test
+st_app/tests/
+
+*.parquet
+build_*.py
