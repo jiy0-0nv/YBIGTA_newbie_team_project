@@ -16,7 +16,7 @@
 - 각 노드가 필요한 데이터만 선택적으로 읽거나 갱신 가능
 - 전체 파이프라인에서 데이터의 흐름을 명확히 추적
 
-## 장점
+### 장점
 
 - **일관성**: 모든 노드가 동일 인터페이스로 접근
 - **확장성**: 필드 추가 또는 변경 시에도 기존 노드 영향 최소화
@@ -30,14 +30,20 @@
 - RAG Review: `query`, `user_prefs`를 읽고 `retrieved`, `citations`, `answer` 기록
 
 
-### Streamlit 배포
-- https://ybigtasession9teamproject-knjbnfuvs2gmw9k7bd9o3c.streamlit.app/
+## Streamlit 배포
+- 배포 링크: https://ybigtasession9teamproject-knjbnfuvs2gmw9k7bd9o3c.streamlit.app/
+
+1. Chat 노드 작동사진
 <img src="images/image 4.png">
-Chat 노드 작동사진
+
+2. Subject info 노드 작동사진
 <img src="images/image 5.png">
-Subject info 노드 작동사진
+
+3. RAG Review 노드 작동사진
 <img src="images/image 6.png">
-RAG Review 노드 작동사진
+
+<br><br>
+
 ---
 
 - EC2 Deploy 관련 문제가 지속되어 추후 다시 구성할 예정입니다.
