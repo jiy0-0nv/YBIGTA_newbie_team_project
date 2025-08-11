@@ -217,3 +217,4 @@ st_app/tests/
 
 *.parquet
 build_*.py
+settings.json
