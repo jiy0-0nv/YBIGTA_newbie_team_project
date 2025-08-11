@@ -38,13 +38,13 @@ def run(state: AppState) -> AppState:
     # 의도 추출
     if "의도: rag_review" in response_text:
         state["next_action"] = "rag_review"
-        print(f"�� LLM이 의도 판단: rag_review")
+        print(f"LLM이 의도 판단: rag_review")
     elif "의도: subject_info" in response_text:
         state["next_action"] = "subject_info"
-        print(f"🎯 LLM이 의도 판단: subject_info")
+        print(f"LLM이 의도 판단: subject_info")
     else:
         state["next_action"] = "end"
-        print(f"�� LLM이 의도 판단: end")
+        print(f"LLM이 의도 판단: end")
     
     # 응답에서 의도 부분 제거
     answer = response_text.split("의도:")[1].strip() if "의도:" in response_text else response_text
