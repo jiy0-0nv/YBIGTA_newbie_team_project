@@ -7,7 +7,7 @@ import faiss
 from sentence_transformers import SentenceTransformer
 from st_app.utils.state import Doc
 
-class MockRetriever:
+class Retriever:
     def __init__(self,
                  index_dir: str = "st_app/db/faiss_index",
                  model_name: str = "sentence-transformers/paraphrase-multilingual-mpnet-base-v2",

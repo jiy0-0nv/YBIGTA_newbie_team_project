@@ -1,11 +1,7 @@
 from langchain_core.prompts import ChatPromptTemplate
 from st_app.rag.llm import get_llm
 from st_app.utils.state import AppState, Doc
-try:
-    from st_app.rag.retriever import FaissRetriever as Retriever
-except Exception:
-    # 빌드 전에도 돌아가도록 안전 폴백
-    from st_app.rag.retriever import MockRetriever as Retriever
+from st_app.rag.retriever import Retriever
 
 prompt = ChatPromptTemplate.from_messages([
     ("system",
