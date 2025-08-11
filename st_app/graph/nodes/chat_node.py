@@ -4,8 +4,8 @@ from st_app.utils.state import AppState
 
 prompt = ChatPromptTemplate.from_messages([
     ("system",
-     "너는 영화 리뷰 앱의 간결한 도우미야. 사실 확인이 필요한 질문엔 모른다고 말해."
-     " 사용자가 작품 정보나 리뷰 분석을 원하면 한 문장으로 확인 질문을 해."),
+     "너는 영화 리뷰 앱의 간결한 도우미야. 앱에는 작품 정보 제공, 리뷰 분석의 기능이 있어."
+     "이외의 기능이나, 사실 확인이 필요한 질문을 하면 모른다고 답해."),
     ("human", "{user_input}")
 ])
 
