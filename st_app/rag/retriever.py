@@ -6,7 +6,7 @@ import numpy as np
 import faiss
 from dotenv import load_dotenv
 from openai import OpenAI
-from st_app.graph.state import Doc
+from st_app.utils.state import Doc
 
 load_dotenv()
 
@@ -28,7 +28,7 @@ def _embed_query(q: str) -> np.ndarray:
     v /= (np.linalg.norm(v, axis=1, keepdims=True) + 1e-12)  # L2 정규화
     return np.ascontiguousarray(v, dtype=np.float32)
 
-class FaissRetriever:
+class Retriever:
     def __init__(self, index_dir: str = "st_app/db/faiss_index", overfetch: int = OVERFETCH):
         self.index_dir = Path(index_dir)
         self.index = faiss.read_index(str(self.index_dir / "index.faiss"))
